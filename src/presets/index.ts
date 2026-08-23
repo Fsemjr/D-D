@@ -1,0 +1,14 @@
+import type { AbilityScores,CharacterPreset } from '../types'; import { standardRuleSet } from '../rules/ruleSets';
+const make=(id:string,title:string,role:string,classId:string,speciesId:string,abilities:AbilityScores,armorClass:number,weapon:string,damageDice:string,spells:string[]=[]):CharacterPreset=>({id,title,role,summary:`Um ${role.toLowerCase()} de nível 5, pronto para entrar em cena.`,character:{name:title,playerName:'',classId,subclass:'',speciesId,level:5,abilities,proficientSkills:['perception','athletics'],expertiseSkills:classId==='rogue'?['stealth']:[],attacks:[{id:'main',name:weapon,damageDice,ability:classId==='rogue'||classId==='ranger'||classId==='monk'?'dexterity':'strength',proficient:true}],equipment:[{id:'pack',name:'Mochila de aventureiro',quantity:1},{id:'armor',name:'Armadura e suprimentos',quantity:1}],spells:spells.map((name,i)=>({id:`spell-${i}`,name,level:i?1:0,prepared:true})),features:['Arquétipo de nível 5','Ataques e recursos de classe'],notes:'Ajuste escolhas de subclasse e recursos conforme os livros permitidos pela mesa.',ruleSet:standardRuleSet,hpMode:'average',armorClass}});
+const standard={strength:13,dexterity:13,constitution:14,intelligence:10,wisdom:12,charisma:10};
+export const presets:CharacterPreset[]=[
+make('tank','Brom Escudo-de-Ferro','Guerreiro tanque','fighter','dwarf',{...standard,strength:15},18,'Espada longa','1d8'),
+make('barbarian','Kaela Presa Rubra','Bárbaro de força','barbarian','human',{...standard,strength:15,dexterity:12},15,'Machado grande','1d12'),
+make('rogue','Nim Passo-Leve','Ladino furtivo','rogue','halfling',{...standard,dexterity:15},15,'Rapieira','1d8'),
+make('wizard','Elara das Cinzas','Mago ofensivo','wizard','elf',{...standard,intelligence:15,dexterity:14},13,'Bordão','1d6',['Raio de Fogo','Mísseis Mágicos','Bola de Fogo']),
+make('cleric','Irmã Maelis','Clérigo suporte','cleric','human',{...standard,wisdom:15,strength:12},18,'Maça','1d6',['Orientação','Curar Ferimentos','Palavra Curativa']),
+make('paladin','Sir Aldren','Paladino guardião','paladin','dragonborn',{...standard,strength:15,charisma:14},18,'Espada longa','1d8',['Benção','Curar Ferimentos']),
+make('ranger','Lyra Vento-Norte','Ranger batedora','ranger','elf',{...standard,dexterity:15,wisdom:14},16,'Arco longo','1d8',['Marca do Caçador','Curar Ferimentos']),
+make('bard','Téo Cordas-de-Prata','Bardo versátil','bard','tiefling',{...standard,charisma:15,dexterity:14},15,'Rapieira','1d8',['Zombaria Viciosa','Palavra Curativa','Sussurros Dissonantes']),
+make('monk','Shen da Água Serena','Monge ágil','monk','human',{...standard,dexterity:15,wisdom:14},16,'Bastão','1d6'),
+make('warlock','Vesper Noctis','Bruxo ocultista','warlock','tiefling',{...standard,charisma:15,dexterity:14},14,'Adaga','1d4',['Rajada Mística','Armadura de Agathys','Repreensão Infernal'])];

@@ -1,0 +1,1 @@
+export const t={brand:'Forja de Heróis',tagline:'Personagens memoráveis. Prontos antes da primeira iniciativa.',create:'Criar personagem',presets:'Escolher personagem pronto',mine:'Meus personagens',quick:'Criação Rápida',save:'Salvar personagem',export:'Exportar PDF'} as const;
