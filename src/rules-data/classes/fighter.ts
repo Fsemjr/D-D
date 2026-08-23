@@ -38,7 +38,7 @@ export const fighterClass: ClassDefinition = {
     ],
   },
   subclassLevel: 3,
-  subclassIds: [],
+  subclassIds: ['fighter-champion'],
   progression: {
     1: {
       level: 1,
@@ -64,7 +64,7 @@ export const fighterClass: ClassDefinition = {
         id: 'fighter-subclass-choice',
         type: 'subclass',
         count: 1,
-        optionIds: [],
+        optionIds: ['fighter-champion'],
       }],
     },
     4: {
