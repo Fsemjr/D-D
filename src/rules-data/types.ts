@@ -126,24 +126,41 @@ export interface SkillChoiceDefinition {
   options: string[];
 }
 
-export interface ChoiceDefinition {
+export type ChoiceOptionType =
+  | 'skill'
+  | 'tool'
+  | 'language'
+  | 'fighting-style'
+  | 'feature'
+  | 'subclass'
+  | 'asi'
+  | 'feat'
+  | 'spell'
+  | 'other';
+
+export interface DirectChoiceDefinition {
   id: string;
 
-  type:
-    | 'skill'
-    | 'tool'
-    | 'language'
-    | 'fighting-style'
-    | 'feature'
-    | 'asi'
-    | 'feat'
-    | 'spell'
-    | 'other';
+  type: ChoiceOptionType;
 
   count?: number;
 
   optionIds?: string[];
 }
+
+export interface AlternativeChoiceDefinition {
+  id: string;
+
+  type: 'one-of';
+
+  count?: number;
+
+  optionTypes: [ChoiceOptionType, ChoiceOptionType, ...ChoiceOptionType[]];
+}
+
+export type ChoiceDefinition =
+  | DirectChoiceDefinition
+  | AlternativeChoiceDefinition;
 
 export interface SpellSlotProgression {
   1?: number;
