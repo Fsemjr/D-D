@@ -8,12 +8,25 @@ import {
 
 const signed = (value: number) => value >= 0 ? `+${value}` : String(value);
 
-export const detectImageFormat = (dataUrl: string): 'PNG' | 'JPEG' | 'WEBP' | undefined => {
+export type SupportedImageFormat = 'PNG' | 'JPEG' | 'WEBP';
+
+export const detectImageFormat = (dataUrl: string): SupportedImageFormat | undefined => {
   const mime = /^data:image\/(png|jpeg|jpg|webp);/i.exec(dataUrl)?.[1]?.toLowerCase();
   if (mime === 'png') return 'PNG';
   if (mime === 'jpeg' || mime === 'jpg') return 'JPEG';
   if (mime === 'webp') return 'WEBP';
   return undefined;
+};
+
+type ImageDocument = Pick<jsPDF, 'addImage'>;
+
+/** Adiciona somente formatos suportados e repassa o formato real ao jsPDF. */
+export const addPortraitToPdf = (document: ImageDocument, dataUrl?: string): boolean => {
+  if (!dataUrl) return false;
+  const format = detectImageFormat(dataUrl);
+  if (!format) return false;
+  document.addImage(dataUrl, format, 158, 12, 38, 45, undefined, 'FAST');
+  return true;
 };
 
 export const exportCharacterPdf = (character: Character) => {
@@ -45,10 +58,7 @@ export const exportCharacterPdf = (character: Character) => {
     y += height;
   };
 
-  const imageFormat = character.portrait ? detectImageFormat(character.portrait) : undefined;
-  if (character.portrait && imageFormat) {
-    document.addImage(character.portrait, imageFormat, 158, 12, 38, 45, undefined, 'FAST');
-  }
+  addPortraitToPdf(document, character.portrait);
   document.setFontSize(24);
   document.setTextColor(92, 52, 24);
   document.text(character.name || 'Herói sem nome', left, y, { maxWidth: 138 });

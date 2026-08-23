@@ -1,16 +1,45 @@
-import type { Character } from '../types';
+import type { AbilityScores, Character } from '../types';
 
 const KEY = 'forja-herois:characters:v1';
 
-const migrateCharacter = (character: Character): Character => ({
-  ...character,
-  purchasedAbilities: character.purchasedAbilities ?? { ...character.abilities },
-  expertiseSkills: character.expertiseSkills.filter((skill) => character.proficientSkills.includes(skill)),
-});
+/**
+ * Normaliza apenas os campos introduzidos em versões posteriores. Os demais
+ * campos permanecem intactos para preservar o máximo possível do registro.
+ */
+export const migrateCharacter = (character: Character): Character => {
+  const proficientSkills = Array.isArray(character.proficientSkills)
+    ? character.proficientSkills
+    : [];
+  const legacyExpertise = Array.isArray(character.expertiseSkills)
+    ? character.expertiseSkills
+    : [];
+  const abilities = character.abilities ?? ({} as AbilityScores);
+
+  return {
+    ...character,
+    abilities,
+    purchasedAbilities: character.purchasedAbilities
+      ? { ...character.purchasedAbilities }
+      : { ...abilities },
+    proficientSkills,
+    expertiseSkills: legacyExpertise.filter((skill) => proficientSkills.includes(skill)),
+  };
+};
 
 export const loadCharacters = (): Character[] => {
   try {
-    return (JSON.parse(localStorage.getItem(KEY) ?? '[]') as Character[]).map(migrateCharacter);
+    const stored: unknown = JSON.parse(localStorage.getItem(KEY) ?? '[]');
+    if (!Array.isArray(stored)) return [];
+
+    return stored.flatMap((entry) => {
+      if (!entry || typeof entry !== 'object') return [];
+      try {
+        return [migrateCharacter(entry as Character)];
+      } catch {
+        // Um registro corrompido não deve apagar os demais personagens válidos.
+        return [];
+      }
+    });
   } catch {
     return [];
   }
