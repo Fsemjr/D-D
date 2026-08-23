@@ -40,12 +40,15 @@ describe('Champion subclass rules data', () => {
   });
 
   it('is registered by the Fighter and offered by its level 3 choice', () => {
-    expect(fighterClass.subclassIds).toEqual(['fighter-champion']);
+    expect(fighterClass.subclassIds).toEqual([
+      'fighter-champion',
+      'fighter-battle-master',
+    ]);
     expect(fighterClass.progression[3]?.choices).toContainEqual({
       id: 'fighter-subclass-choice',
       type: 'subclass',
       count: 1,
-      optionIds: ['fighter-champion'],
+      optionIds: ['fighter-champion', 'fighter-battle-master'],
     });
   });
 
