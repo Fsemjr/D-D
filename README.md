@@ -60,8 +60,12 @@ Implemente um objeto `RuleSet` em `src/rules/ruleSets.ts` com identificador, nom
 - **PV:** usa dado máximo no 1º nível e média arredondada para cima nos demais; pode ser substituído manualmente. Rolagem foi deixada fora do escopo.
 - **CA:** é informada pelo jogador, pois proficiências, armaduras, escudos e efeitos exigem escolhas e exceções que não devem ser inferidas silenciosamente.
 - **Conteúdo de regras:** subclasses, talentos e listas integrais de magias não estão embutidos; a mesa registra as escolhas em campos livres, evitando alegar cobertura de compêndio completo.
-- **Custom:** nesta versão personaliza orçamento do Point Buy; a tabela inicial é linear e a arquitetura aceita tabelas futuras.
+- **Custom:** permite editar orçamento, mínimo, máximo, tabela de custos e limite de nível; configurações inconsistentes bloqueiam o avanço e o salvamento.
 
 ## Limitações e próximos passos
 
-O navegador não sincroniza personagens entre dispositivos; limpar os dados do site remove a biblioteca. O PDF usa uma composição própria e não replica a ficha oficial. Próximos passos naturais são IndexedDB, importação/exportação JSON, tabela de custos Custom editável, acessibilidade auditada, testes de interface e módulos opcionais de subclasses/talentos licenciados.
+O navegador não sincroniza personagens entre dispositivos; limpar os dados do site remove a biblioteca. O PDF usa uma composição própria e não replica a ficha oficial. Próximos passos naturais são IndexedDB, importação/exportação JSON, acessibilidade auditada, testes de interface e módulos opcionais de subclasses/talentos licenciados.
+
+## Modelo de atributos
+
+`purchasedAbilities` guarda somente os valores pagos pelo Point Buy e é o único conjunto validado contra o `RuleSet`. `abilities` guarda os valores finais usados nos cálculos da ficha, depois de bônus de espécie/background, ASI ou talentos. Essa separação permite que um atributo final ultrapasse 15 sem invalidar a compra original.
