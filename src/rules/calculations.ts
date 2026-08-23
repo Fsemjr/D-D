@@ -1,0 +1,13 @@
+import type { AbilityScores,Attack,CharacterClass,RuleSet,Skill } from '../types';
+export const calculateAbilityModifier=(score:number)=>Math.floor((score-10)/2);
+export const calculateProficiencyBonus=(level:number)=>Math.ceil(Math.max(1,Math.min(20,level))/4)+1;
+export const calculatePointBuyCost=(scores:AbilityScores,rules:RuleSet)=>Object.values(scores).reduce((sum,score)=>sum+(rules.costTable[score]??Number.POSITIVE_INFINITY),0);
+export const validatePointBuy=(scores:AbilityScores,rules:RuleSet)=>{const values=Object.values(scores); const used=calculatePointBuyCost(scores,rules); return {valid:values.every(v=>v>=rules.minimumAbility&&v<=rules.maximumAbility&&Number.isFinite(rules.costTable[v]))&&used<=rules.totalPoints,used,remaining:rules.totalPoints-used};};
+export const calculateSkillBonus=(score:number,level:number,proficient=false,expertise=false)=>calculateAbilityModifier(score)+(proficient?calculateProficiencyBonus(level)*(expertise?2:1):0);
+export const calculateSavingThrow=(score:number,level:number,proficient=false)=>calculateAbilityModifier(score)+(proficient?calculateProficiencyBonus(level):0);
+export const calculateAttackBonus=(attack:Attack,scores:AbilityScores,level:number)=>attack.attackBonusOverride??calculateAbilityModifier(scores[attack.ability])+(attack.proficient?calculateProficiencyBonus(level):0);
+export const calculateDamageBonus=(attack:Attack,scores:AbilityScores)=>attack.damageBonusOverride??calculateAbilityModifier(scores[attack.ability]);
+export const calculateInitiative=(scores:AbilityScores)=>calculateAbilityModifier(scores.dexterity);
+export const calculateHitPoints=(characterClass:CharacterClass,level:number,constitution:number,mode:'average'|'manual'='average',manual?:number)=>mode==='manual'&&manual!==undefined?manual:Math.max(1,characterClass.hitDie+calculateAbilityModifier(constitution)+(level-1)*(Math.floor(characterClass.hitDie/2)+1+calculateAbilityModifier(constitution)));
+export const calculateSpellSaveDC=(ability:number,level:number)=>8+calculateAbilityModifier(ability)+calculateProficiencyBonus(level);
+export const calculateSkillFor=(skill:Skill,scores:AbilityScores,level:number,proficient:string[],expertise:string[])=>calculateSkillBonus(scores[skill.ability],level,proficient.includes(skill.id),expertise.includes(skill.id));
