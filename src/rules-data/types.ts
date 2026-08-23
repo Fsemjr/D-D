@@ -61,6 +61,8 @@ export interface MechanicalEffect {
 
   ability?: AbilityKey;
 
+  abilityOptions?: AbilityKey[];
+
   value?: number | string | boolean;
 
   damageType?: string;
@@ -126,12 +128,19 @@ export interface SkillChoiceDefinition {
   options: string[];
 }
 
+export interface ChoiceCountProgression {
+  level: number;
+
+  count: number;
+}
+
 export type ChoiceOptionType =
   | 'skill'
   | 'tool'
   | 'language'
   | 'fighting-style'
   | 'feature'
+  | 'technique'
   | 'subclass'
   | 'asi'
   | 'feat'
@@ -143,9 +152,13 @@ export interface DirectChoiceDefinition {
 
   type: ChoiceOptionType;
 
+  minimumLevel?: number;
+
   count?: number;
 
   optionIds?: string[];
+
+  countProgression?: ChoiceCountProgression[];
 }
 
 export interface AlternativeChoiceDefinition {
@@ -161,6 +174,43 @@ export interface AlternativeChoiceDefinition {
 export type ChoiceDefinition =
   | DirectChoiceDefinition
   | AlternativeChoiceDefinition;
+
+export interface TechniqueDefinition {
+  id: string;
+
+  names: LocalizedName;
+
+  sourceId: string;
+
+  minimumLevel?: number;
+
+  effects?: MechanicalEffect[];
+}
+
+export type ResourceRecovery =
+  | 'short-rest'
+  | 'long-rest'
+  | 'short-or-long-rest'
+  | 'dawn'
+  | 'none';
+
+export interface ResourceLevelDefinition {
+  level: number;
+
+  maximum: number;
+
+  dieSize?: number;
+}
+
+export interface ResourceDefinition {
+  id: string;
+
+  names: LocalizedName;
+
+  recovery: ResourceRecovery;
+
+  progression: ResourceLevelDefinition[];
+}
 
 export interface SpellSlotProgression {
   1?: number;
@@ -247,6 +297,10 @@ export interface SubclassDefinition {
   names: LocalizedName;
 
   featureIds: string[];
+
+  choices?: ChoiceDefinition[];
+
+  resources?: ResourceDefinition[];
 
   spellIds?: string[];
 }

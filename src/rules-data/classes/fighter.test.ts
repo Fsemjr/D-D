@@ -97,7 +97,7 @@ describe('Fighter rules data', () => {
       id: 'fighter-subclass-choice',
       type: 'subclass',
       count: 1,
-      optionIds: ['fighter-champion'],
+      optionIds: ['fighter-champion', 'fighter-battle-master'],
     });
   });
 
