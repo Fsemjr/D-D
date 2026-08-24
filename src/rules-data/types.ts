@@ -67,6 +67,7 @@ export type MechanicalEffectType =
   | 'climbing-speed'
   | 'hp-per-level'
   | 'flat-hp'
+  | 'temporary-hp'
   | 'granted-spell'
   | 'granted-cantrip'
   | 'natural-weapon'
@@ -171,6 +172,7 @@ export type ChoiceOptionType =
   | 'asi'
   | 'feat'
   | 'spell'
+  | 'saving-throw-proficiency'
   | 'other';
 
 export interface DirectChoiceDefinition {
@@ -179,6 +181,8 @@ export interface DirectChoiceDefinition {
   type: ChoiceOptionType;
 
   minimumLevel?: number;
+
+  condition?: string;
 
   count?: number;
 

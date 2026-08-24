@@ -103,6 +103,7 @@ describe('Fighter rules data', () => {
         'fighter-eldritch-knight',
         'fighter-arcane-archer',
         'fighter-cavalier',
+        'fighter-samurai',
       ],
     });
   });
