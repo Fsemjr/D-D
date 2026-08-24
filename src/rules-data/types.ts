@@ -195,6 +195,8 @@ export interface AlternativeChoiceDefinition {
   count?: number;
 
   optionTypes: [ChoiceOptionType, ChoiceOptionType, ...ChoiceOptionType[]];
+
+  choices?: [DirectChoiceDefinition, DirectChoiceDefinition, ...DirectChoiceDefinition[]];
 }
 
 export type ChoiceDefinition =
@@ -227,9 +229,17 @@ export type ResourceRecovery =
 export interface ResourceLevelDefinition {
   level: number;
 
-  maximum: number;
+  maximum: number | ResourceMaximumDefinition;
 
   dieSize?: number;
+}
+
+export interface ResourceMaximumDefinition {
+  type: 'ability-modifier';
+
+  ability: AbilityKey;
+
+  minimum?: number;
 }
 
 export interface ResourceDefinition {
