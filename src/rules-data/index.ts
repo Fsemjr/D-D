@@ -1,4 +1,5 @@
 export * from './types';
+export * from './catalog';
 export * from './classes';
 export * from './ancestries';
 export * from './features';

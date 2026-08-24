@@ -13,6 +13,12 @@ function abilityScoreImprovementChoice(level: number): ChoiceDefinition {
 export const fighterClass: ClassDefinition = {
   id: 'fighter',
   names: { 'pt-BR': 'Guerreiro', 'en-US': 'Fighter' },
+  source: { bookId: 'jvf-classes-subclasses-compendium' },
+  tags: ['martial', 'weapon-focused', 'non-spellcasting-base'],
+  summary: {
+    'pt-BR': 'Combatente marcial versátil com múltiplos ataques, estilos de luta e ampla progressão de talentos.',
+    'en-US': 'A versatile martial combatant with multiple attacks, fighting styles, and broad feat progression.',
+  },
   hitDie: 10,
   primaryAbilities: ['strength', 'dexterity'],
   savingThrows: ['strength', 'constitution'],
