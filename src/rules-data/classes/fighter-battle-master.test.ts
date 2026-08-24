@@ -144,12 +144,17 @@ describe('Battle Master subclass rules data', () => {
     expect(fighterClass.subclassIds).toEqual([
       'fighter-champion',
       'fighter-battle-master',
+      'fighter-eldritch-knight',
     ]);
     expect(fighterClass.progression[3]?.choices).toContainEqual({
       id: 'fighter-subclass-choice',
       type: 'subclass',
       count: 1,
-      optionIds: ['fighter-champion', 'fighter-battle-master'],
+      optionIds: [
+        'fighter-champion',
+        'fighter-battle-master',
+        'fighter-eldritch-knight',
+      ],
     });
   });
 
