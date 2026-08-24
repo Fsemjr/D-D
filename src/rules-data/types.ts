@@ -247,6 +247,8 @@ export type SpellcastingPreparationMode =
   | 'pact'
   | 'none';
 
+export type KnownSpellLevelLimit = 'available-spell-slots';
+
 export interface SpellcastingDefinition {
   ability: AbilityKey;
 
@@ -254,27 +256,51 @@ export interface SpellcastingDefinition {
 
   startsAtLevel: number;
 
+  spellListId?: string;
+
+  progression?: Partial<Record<number, SpellcastingLevelDefinition>>;
+
+  slotRecovery?: ResourceRecovery;
+
+  allowedSchools?: SpellSchool[];
+
+  schoolRestrictionExceptionLevels?: number[];
+
+  initialUnrestrictedSpells?: number;
+
+  knownSpellReplacementsPerLevel?: number;
+
+  preserveUnrestrictedSchoolChoiceOnReplacement?: boolean;
+
+  knownSpellLevelLimit?: KnownSpellLevelLimit;
+
+  saveDcFormula?: string;
+
+  attackModifierFormula?: string;
+
   ritualCasting?: boolean;
 
   spellbook?: boolean;
 }
 
-export interface ClassLevelDefinition {
+export interface SpellcastingLevelDefinition {
   level: number;
-
-  proficiencyBonus: number;
-
-  featureIds: string[];
-
-  choices?: ChoiceDefinition[];
-
-  spellSlots?: SpellSlotProgression;
 
   cantripsKnown?: number;
 
   spellsKnown?: number;
 
+  spellSlots?: SpellSlotProgression;
+
   preparedSpellFormula?: string;
+}
+
+export interface ClassLevelDefinition extends SpellcastingLevelDefinition {
+  proficiencyBonus: number;
+
+  featureIds: string[];
+
+  choices?: ChoiceDefinition[];
 }
 
 export interface ClassDefinition extends RuleCatalogMetadata {
@@ -319,6 +345,8 @@ export interface SubclassDefinition extends RuleCatalogMetadata {
   resources?: ResourceDefinition[];
 
   spellIds?: string[];
+
+  spellcasting?: SpellcastingDefinition;
 }
 
 export interface AncestryDefinition extends RuleCatalogMetadata {
