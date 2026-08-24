@@ -103,15 +103,16 @@ describe('Eldritch Knight subclass rules data', () => {
     );
   });
 
-  it('registers all three Fighter subclasses', () => {
+  it('registers all four Fighter subclasses', () => {
     expect(fighterClass.subclassIds).toEqual([
       'fighter-champion',
       'fighter-battle-master',
       'fighter-eldritch-knight',
+      'fighter-arcane-archer',
     ]);
   });
 
-  it('offers all three subclasses in the level 3 choice', () => {
+  it('offers all four subclasses in the level 3 choice', () => {
     expect(fighterClass.progression[3]?.choices).toContainEqual({
       id: 'fighter-subclass-choice',
       type: 'subclass',
@@ -120,6 +121,7 @@ describe('Eldritch Knight subclass rules data', () => {
         'fighter-champion',
         'fighter-battle-master',
         'fighter-eldritch-knight',
+        'fighter-arcane-archer',
       ],
     });
   });

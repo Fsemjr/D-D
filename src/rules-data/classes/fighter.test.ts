@@ -101,6 +101,7 @@ describe('Fighter rules data', () => {
         'fighter-champion',
         'fighter-battle-master',
         'fighter-eldritch-knight',
+        'fighter-arcane-archer',
       ],
     });
   });

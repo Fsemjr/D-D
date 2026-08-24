@@ -79,7 +79,11 @@ export interface MechanicalEffect {
 
   abilityOptions?: AbilityKey[];
 
+  savingThrowAbility?: AbilityKey;
+
   value?: number | string | boolean;
+
+  progression?: MechanicalEffectLevelDefinition[];
 
   damageType?: string;
 
@@ -88,6 +92,12 @@ export interface MechanicalEffect {
   spellId?: string;
 
   note?: LocalizedName;
+}
+
+export interface MechanicalEffectLevelDefinition {
+  level: number;
+
+  value: number | string | boolean;
 }
 
 export interface FeatureDefinition extends RuleCatalogMetadata {
@@ -199,6 +209,10 @@ export interface TechniqueDefinition extends RuleCatalogMetadata {
   sourceId: string;
 
   minimumLevel?: number;
+
+  school?: SpellSchool;
+
+  requiresAttackRoll?: boolean;
 
   effects?: MechanicalEffect[];
 }
