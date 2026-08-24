@@ -146,6 +146,7 @@ describe('Battle Master subclass rules data', () => {
       'fighter-battle-master',
       'fighter-eldritch-knight',
       'fighter-arcane-archer',
+      'fighter-cavalier',
     ]);
     expect(fighterClass.progression[3]?.choices).toContainEqual({
       id: 'fighter-subclass-choice',
@@ -156,6 +157,7 @@ describe('Battle Master subclass rules data', () => {
         'fighter-battle-master',
         'fighter-eldritch-knight',
         'fighter-arcane-archer',
+        'fighter-cavalier',
       ],
     });
   });
