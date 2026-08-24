@@ -48,6 +48,7 @@ export const fighterClass: ClassDefinition = {
     'fighter-champion',
     'fighter-battle-master',
     'fighter-eldritch-knight',
+    'fighter-arcane-archer',
   ],
   progression: {
     1: {
@@ -78,6 +79,7 @@ export const fighterClass: ClassDefinition = {
           'fighter-champion',
           'fighter-battle-master',
           'fighter-eldritch-knight',
+          'fighter-arcane-archer',
         ],
       }],
     },

@@ -140,11 +140,12 @@ describe('Battle Master subclass rules data', () => {
     ).toBe(true);
   });
 
-  it('registers Champion and Battle Master on the base Fighter', () => {
+  it('preserves every registered subclass on the base Fighter', () => {
     expect(fighterClass.subclassIds).toEqual([
       'fighter-champion',
       'fighter-battle-master',
       'fighter-eldritch-knight',
+      'fighter-arcane-archer',
     ]);
     expect(fighterClass.progression[3]?.choices).toContainEqual({
       id: 'fighter-subclass-choice',
@@ -154,6 +155,7 @@ describe('Battle Master subclass rules data', () => {
         'fighter-champion',
         'fighter-battle-master',
         'fighter-eldritch-knight',
+        'fighter-arcane-archer',
       ],
     });
   });

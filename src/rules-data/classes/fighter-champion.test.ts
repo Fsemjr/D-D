@@ -44,6 +44,7 @@ describe('Champion subclass rules data', () => {
       'fighter-champion',
       'fighter-battle-master',
       'fighter-eldritch-knight',
+      'fighter-arcane-archer',
     ]);
     expect(fighterClass.progression[3]?.choices).toContainEqual({
       id: 'fighter-subclass-choice',
@@ -53,6 +54,7 @@ describe('Champion subclass rules data', () => {
         'fighter-champion',
         'fighter-battle-master',
         'fighter-eldritch-knight',
+        'fighter-arcane-archer',
       ],
     });
   });
