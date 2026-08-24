@@ -36,6 +36,12 @@ export const fighterBattleMasterSubclass: SubclassDefinition = {
   id: 'fighter-battle-master',
   classId: 'fighter',
   names: { 'pt-BR': 'Mestre de Batalha', 'en-US': 'Battle Master' },
+  source: { bookId: 'jvf-classes-subclasses-compendium' },
+  tags: ['martial', 'maneuvers', 'resource-management', 'tactical'],
+  summary: {
+    'pt-BR': 'Arquétipo tático baseado em manobras e dados de superioridade.',
+    'en-US': 'A tactical archetype built around maneuvers and superiority dice.',
+  },
   featureIds: [
     'fighter-battle-master-combat-superiority',
     'fighter-battle-master-student-of-war',

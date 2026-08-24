@@ -4,6 +4,22 @@ export type Locale = 'pt-BR' | 'en-US';
 
 export type LocalizedName = Record<Locale, string>;
 
+export interface RuleSourceMetadata {
+  bookId: string;
+
+  version?: string;
+
+  page?: number | number[];
+}
+
+export interface RuleCatalogMetadata {
+  source?: RuleSourceMetadata;
+
+  tags?: string[];
+
+  summary?: LocalizedName;
+}
+
 export type CreatureType =
   | 'aberration'
   | 'beast'
@@ -74,7 +90,7 @@ export interface MechanicalEffect {
   note?: LocalizedName;
 }
 
-export interface FeatureDefinition {
+export interface FeatureDefinition extends RuleCatalogMetadata {
   id: string;
 
   names: LocalizedName;
@@ -175,7 +191,7 @@ export type ChoiceDefinition =
   | DirectChoiceDefinition
   | AlternativeChoiceDefinition;
 
-export interface TechniqueDefinition {
+export interface TechniqueDefinition extends RuleCatalogMetadata {
   id: string;
 
   names: LocalizedName;
@@ -261,7 +277,7 @@ export interface ClassLevelDefinition {
   preparedSpellFormula?: string;
 }
 
-export interface ClassDefinition {
+export interface ClassDefinition extends RuleCatalogMetadata {
   id: string;
 
   names: LocalizedName;
@@ -289,7 +305,7 @@ export interface ClassDefinition {
   spellcasting?: SpellcastingDefinition;
 }
 
-export interface SubclassDefinition {
+export interface SubclassDefinition extends RuleCatalogMetadata {
   id: string;
 
   classId: string;
@@ -305,7 +321,7 @@ export interface SubclassDefinition {
   spellIds?: string[];
 }
 
-export interface AncestryDefinition {
+export interface AncestryDefinition extends RuleCatalogMetadata {
   id: string;
 
   names: LocalizedName;
@@ -325,7 +341,7 @@ export interface AncestryDefinition {
   subraceIds?: string[];
 }
 
-export interface SubraceDefinition {
+export interface SubraceDefinition extends RuleCatalogMetadata {
   id: string;
 
   ancestryId: string;
@@ -337,7 +353,7 @@ export interface SubraceDefinition {
   traitIds: string[];
 }
 
-export interface LineageDefinition {
+export interface LineageDefinition extends RuleCatalogMetadata {
   id: string;
 
   names: LocalizedName;
@@ -365,7 +381,7 @@ export type SpellSchool =
   | 'necromancy'
   | 'transmutation';
 
-export interface SpellDefinition {
+export interface SpellDefinition extends RuleCatalogMetadata {
   id: string;
 
   names: LocalizedName;
