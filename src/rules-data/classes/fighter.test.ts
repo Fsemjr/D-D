@@ -104,6 +104,7 @@ describe('Fighter rules data', () => {
         'fighter-arcane-archer',
         'fighter-cavalier',
         'fighter-samurai',
+        'fighter-banneret',
       ],
     });
   });
