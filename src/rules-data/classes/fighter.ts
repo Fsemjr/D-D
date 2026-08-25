@@ -51,6 +51,7 @@ export const fighterClass: ClassDefinition = {
     'fighter-arcane-archer',
     'fighter-cavalier',
     'fighter-samurai',
+    'fighter-banneret',
   ],
   progression: {
     1: {
@@ -84,6 +85,7 @@ export const fighterClass: ClassDefinition = {
           'fighter-arcane-archer',
           'fighter-cavalier',
           'fighter-samurai',
+          'fighter-banneret',
         ],
       }],
     },

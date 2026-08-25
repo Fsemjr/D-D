@@ -43,6 +43,7 @@ const expectedSubclassIds = [
   'fighter-arcane-archer',
   'fighter-cavalier',
   'fighter-samurai',
+  'fighter-banneret',
 ];
 
 function featureById(id: string) {
@@ -99,7 +100,7 @@ describe('Samurai subclass rules data', () => {
     );
   });
 
-  it('registers and offers exactly the six current Fighter subclasses', () => {
+  it('registers and offers exactly the seven current Fighter subclasses', () => {
     expect(fighterClass.subclassIds).toEqual(expectedSubclassIds);
     expect(fighterClass.progression[3]?.choices).toContainEqual({
       id: 'fighter-subclass-choice',

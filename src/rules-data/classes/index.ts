@@ -5,3 +5,4 @@ export * from './fighter-eldritch-knight';
 export * from './fighter-arcane-archer';
 export * from './fighter-cavalier';
 export * from './fighter-samurai';
+export * from './fighter-banneret';

@@ -57,6 +57,7 @@ export type MechanicalEffectType =
   | 'skill-proficiency'
   | 'tool-proficiency'
   | 'saving-throw-proficiency'
+  | 'expertise'
   | 'language'
   | 'resistance'
   | 'immunity'
@@ -75,6 +76,8 @@ export type MechanicalEffectType =
 
 export interface MechanicalEffect {
   type: MechanicalEffectType;
+
+  triggerFeatureId?: string;
 
   ability?: AbilityKey;
 
