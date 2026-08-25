@@ -79,6 +79,8 @@ export interface MechanicalEffect {
 
   triggerFeatureId?: string;
 
+  condition?: string;
+
   ability?: AbilityKey;
 
   abilityOptions?: AbilityKey[];
