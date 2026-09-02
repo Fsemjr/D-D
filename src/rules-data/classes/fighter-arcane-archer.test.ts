@@ -122,7 +122,7 @@ describe('Arcane Archer subclass rules data', () => {
     );
   });
 
-  it('registers and offers all nine Fighter subclasses', () => {
+  it('registers and offers all ten Fighter subclasses', () => {
     const expectedSubclassIds = [
       'fighter-champion',
       'fighter-battle-master',
@@ -133,6 +133,7 @@ describe('Arcane Archer subclass rules data', () => {
       'fighter-banneret',
       'fighter-echo-knight',
       'fighter-psi-warrior',
+      'fighter-rune-knight',
     ];
 
     expect(fighterClass.subclassIds).toEqual(expectedSubclassIds);

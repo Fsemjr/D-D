@@ -8,3 +8,4 @@ export * from './fighter-samurai';
 export * from './fighter-banneret';
 export * from './fighter-echo-knight';
 export * from './fighter-psi-warrior';
+export * from './fighter-rune-knight';

@@ -50,6 +50,7 @@ describe('Champion subclass rules data', () => {
       'fighter-banneret',
       'fighter-echo-knight',
       'fighter-psi-warrior',
+      'fighter-rune-knight',
     ]);
     expect(fighterClass.progression[3]?.choices).toContainEqual({
       id: 'fighter-subclass-choice',
@@ -65,6 +66,7 @@ describe('Champion subclass rules data', () => {
         'fighter-banneret',
         'fighter-echo-knight',
         'fighter-psi-warrior',
+        'fighter-rune-knight',
       ],
     });
   });

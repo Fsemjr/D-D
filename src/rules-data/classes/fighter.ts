@@ -54,6 +54,7 @@ export const fighterClass: ClassDefinition = {
     'fighter-banneret',
     'fighter-echo-knight',
     'fighter-psi-warrior',
+    'fighter-rune-knight',
   ],
   progression: {
     1: {
@@ -90,6 +91,7 @@ export const fighterClass: ClassDefinition = {
           'fighter-banneret',
           'fighter-echo-knight',
           'fighter-psi-warrior',
+          'fighter-rune-knight',
         ],
       }],
     },

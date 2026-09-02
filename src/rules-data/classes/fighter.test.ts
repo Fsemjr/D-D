@@ -107,6 +107,7 @@ describe('Fighter rules data', () => {
         'fighter-banneret',
         'fighter-echo-knight',
         'fighter-psi-warrior',
+        'fighter-rune-knight',
       ],
     });
   });
