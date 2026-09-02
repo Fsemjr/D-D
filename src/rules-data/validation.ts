@@ -37,6 +37,7 @@ const characterSizes = new Set([
   'small',
   'medium',
   'large',
+  'huge',
   'variable',
 ]);
 

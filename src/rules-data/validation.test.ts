@@ -159,6 +159,13 @@ describe('AncestryDefinition validation', () => {
     })).toBe(true);
   });
 
+  it('accepts Huge as a supported size category', () => {
+    expect(isValidAncestryDefinition({
+      ...simpleAncestry,
+      size: 'huge',
+    })).toBe(true);
+  });
+
   it('rejects an ancestry with an invalid ability rule', () => {
     expect(isValidAncestryDefinition({
       ...simpleAncestry,

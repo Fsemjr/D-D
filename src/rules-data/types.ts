@@ -41,6 +41,7 @@ export type CharacterSize =
   | 'small'
   | 'medium'
   | 'large'
+  | 'huge'
   | 'variable';
 
 export type FeatureOrigin =
@@ -79,7 +80,16 @@ export type MechanicalEffectType =
   | 'remove-condition-effects'
   | 'cover'
   | 'weapon-attack'
+  | 'roll-modifier'
+  | 'fixed-bonus'
+  | 'size'
+  | 'reach'
+  | 'reroll'
+  | 'redirection'
+  | 'inscription'
   | 'informational';
+
+export type RollType = 'attack-roll' | 'saving-throw' | 'ability-check';
 
 export type ActionType = 'action' | 'bonus-action' | 'reaction';
 
@@ -111,6 +121,14 @@ export interface LimitedUseDefinition {
   recovery: ResourceRecovery;
 
   additionalUseCost?: ResourceCostDefinition;
+
+  progression?: LimitedUseLevelDefinition[];
+}
+
+export interface LimitedUseLevelDefinition {
+  level: number;
+
+  freeUses: number;
 }
 
 export interface UsageLimitDefinition {
@@ -151,13 +169,39 @@ export interface SpeedMultiplierFormulaDefinition {
   multiplier: number;
 }
 
+export interface DiceFormulaDefinition {
+  type: 'dice';
+
+  count: number;
+
+  dieSize: number;
+
+  multiplier?: number;
+
+  unit?: 'centimeter';
+}
+
+export interface ReferenceFormulaDefinition {
+  type: 'reference';
+
+  referenceId: string;
+
+  property: 'count';
+}
+
 export type MechanicalFormulaDefinition =
   | AbilityFormulaDefinition
   | ResourceDieFormulaDefinition
-  | SpeedMultiplierFormulaDefinition;
+  | SpeedMultiplierFormulaDefinition
+  | DiceFormulaDefinition
+  | ReferenceFormulaDefinition;
 
 export interface DurationDefinition {
-  type: 'until-end-of-current-turn' | 'minutes' | 'while-concentrating';
+  type:
+    | 'until-end-of-current-turn'
+    | 'until-next-long-rest'
+    | 'minutes'
+    | 'while-concentrating';
 
   value?: number;
 
@@ -211,7 +255,7 @@ export interface SavingThrowDefinition {
 
   dc: AbilityFormulaDefinition;
 
-  onFailure?: MechanicalEffectChoiceDefinition;
+  onFailure?: MechanicalEffectChoiceDefinition | MechanicalEffect[];
 }
 
 export interface MechanicalEffectChoiceOption {
@@ -249,6 +293,8 @@ export interface RuleMechanicDefinition {
 
   save?: SavingThrowDefinition;
 
+  choices?: MechanicalEffectChoiceDefinition[];
+
 }
 
 export interface MechanicalEffect extends RuleMechanicDefinition {
@@ -274,7 +320,17 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
 
   damageType?: string;
 
+  rollTypes?: RollType[];
+
+  usesSameRoll?: boolean;
+
+  mustUseNewRoll?: boolean;
+
+  ignoresOriginalRange?: boolean;
+
   movement?: MovementDefinition;
+
+  distance?: DistanceDefinition;
 
   conditionIds?: string[];
 
@@ -283,6 +339,10 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
   components?: 'none';
 
   concentration?: boolean;
+
+  eligibleObjectCategories?: string[];
+
+  maximumPerObject?: number;
 
   proficiencyId?: string;
 
@@ -387,6 +447,14 @@ export interface DirectChoiceDefinition {
   optionIds?: string[];
 
   countProgression?: ChoiceCountProgression[];
+
+  replacement?: {
+    trigger: 'class-level-gained';
+
+    classId: string;
+
+    count: number;
+  };
 }
 
 export interface AlternativeChoiceDefinition {
@@ -417,6 +485,8 @@ export interface TechniqueDefinition extends RuleCatalogMetadata, RuleMechanicDe
   school?: SpellSchool;
 
   requiresAttackRoll?: boolean;
+
+  passiveEffects?: MechanicalEffect[];
 
   effects?: MechanicalEffect[];
 }
