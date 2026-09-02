@@ -72,9 +72,186 @@ export type MechanicalEffectType =
   | 'granted-spell'
   | 'granted-cantrip'
   | 'natural-weapon'
+  | 'damage'
+  | 'damage-reduction'
+  | 'movement'
+  | 'condition'
+  | 'remove-condition-effects'
+  | 'cover'
+  | 'weapon-attack'
   | 'informational';
 
-export interface MechanicalEffect {
+export type ActionType = 'action' | 'bonus-action' | 'reaction';
+
+export interface DistanceDefinition {
+  value: number;
+
+  unit: 'meter';
+}
+
+export interface TriggerDefinition {
+  event: string;
+
+  sourceId?: string;
+
+  conditions?: string[];
+}
+
+export interface ResourceCostDefinition {
+  resourceId: string;
+
+  amount: number;
+
+  roll?: boolean;
+}
+
+export interface LimitedUseDefinition {
+  freeUses: number;
+
+  recovery: ResourceRecovery;
+
+  additionalUseCost?: ResourceCostDefinition;
+}
+
+export interface UsageLimitDefinition {
+  maximum: number;
+
+  period: 'turn' | 'round';
+}
+
+export interface AbilityFormulaDefinition {
+  base?: number;
+
+  proficiencyBonusMultiplier?: number;
+
+  abilityModifier?: AbilityKey;
+
+  multiplier?: number;
+
+  minimum?: number;
+}
+
+export interface ResourceDieFormulaDefinition {
+  type: 'resource-die';
+
+  resourceId: string;
+
+  count?: number;
+
+  abilityModifier?: AbilityKey;
+
+  minimum?: number;
+}
+
+export interface SpeedMultiplierFormulaDefinition {
+  type: 'speed-multiplier';
+
+  speed: 'walking' | 'flying' | 'swimming' | 'climbing';
+
+  multiplier: number;
+}
+
+export type MechanicalFormulaDefinition =
+  | AbilityFormulaDefinition
+  | ResourceDieFormulaDefinition
+  | SpeedMultiplierFormulaDefinition;
+
+export interface DurationDefinition {
+  type: 'until-end-of-current-turn' | 'minutes' | 'while-concentrating';
+
+  value?: number;
+
+  endsEarlyWhen?: string[];
+}
+
+export interface TargetCriteriaDefinition {
+  kind: 'self' | 'creature' | 'object';
+
+  visible?: boolean;
+
+  willing?: boolean;
+
+  excludesSelf?: boolean;
+
+  canIncludeSelf?: boolean;
+
+  sizeMaximum?: CharacterSize;
+
+  conditions?: string[];
+
+  count?: number | ResourceMaximumDefinition;
+
+  minimum?: number;
+}
+
+export interface TargetChoiceDefinition {
+  type: 'one-of';
+
+  options: [
+    TargetCriteriaDefinition,
+    TargetCriteriaDefinition,
+    ...TargetCriteriaDefinition[],
+  ];
+}
+
+export type TargetDefinition = TargetCriteriaDefinition | TargetChoiceDefinition;
+
+export interface MovementDefinition {
+  distance: DistanceDefinition;
+
+  directions?: Array<'horizontal' | 'vertical'>;
+
+  directionChoice?: 'any';
+
+  destination?: 'visible-unoccupied-space';
+}
+
+export interface SavingThrowDefinition {
+  ability: AbilityKey;
+
+  dc: AbilityFormulaDefinition;
+
+  onFailure?: MechanicalEffectChoiceDefinition;
+}
+
+export interface MechanicalEffectChoiceOption {
+  id: string;
+
+  effects: MechanicalEffect[];
+}
+
+export interface MechanicalEffectChoiceDefinition {
+  type: 'one-of';
+
+  options: [
+    MechanicalEffectChoiceOption,
+    MechanicalEffectChoiceOption,
+    ...MechanicalEffectChoiceOption[],
+  ];
+}
+
+export interface RuleMechanicDefinition {
+  activation?: ActionType;
+
+  trigger?: TriggerDefinition;
+
+  range?: DistanceDefinition;
+
+  target?: TargetDefinition;
+
+  resourceCost?: ResourceCostDefinition;
+
+  usage?: LimitedUseDefinition;
+
+  limit?: UsageLimitDefinition;
+
+  duration?: DurationDefinition;
+
+  save?: SavingThrowDefinition;
+
+}
+
+export interface MechanicalEffect extends RuleMechanicDefinition {
   type: MechanicalEffectType;
 
   triggerFeatureId?: string;
@@ -91,7 +268,21 @@ export interface MechanicalEffect {
 
   progression?: MechanicalEffectLevelDefinition[];
 
+  formula?: MechanicalFormulaDefinition;
+
+  minimum?: number;
+
   damageType?: string;
+
+  movement?: MovementDefinition;
+
+  conditionIds?: string[];
+
+  cover?: 'half';
+
+  components?: 'none';
+
+  concentration?: boolean;
 
   proficiencyId?: string;
 
@@ -106,7 +297,7 @@ export interface MechanicalEffectLevelDefinition {
   value: number | string | boolean;
 }
 
-export interface FeatureDefinition extends RuleCatalogMetadata {
+export interface FeatureDefinition extends RuleCatalogMetadata, RuleMechanicDefinition {
   id: string;
 
   names: LocalizedName;
@@ -116,6 +307,8 @@ export interface FeatureDefinition extends RuleCatalogMetadata {
   sourceId: string;
 
   minimumLevel?: number;
+
+  techniqueIds?: string[];
 
   effects?: MechanicalEffect[];
 }
@@ -212,7 +405,7 @@ export type ChoiceDefinition =
   | DirectChoiceDefinition
   | AlternativeChoiceDefinition;
 
-export interface TechniqueDefinition extends RuleCatalogMetadata {
+export interface TechniqueDefinition extends RuleCatalogMetadata, RuleMechanicDefinition {
   id: string;
 
   names: LocalizedName;
@@ -243,12 +436,36 @@ export interface ResourceLevelDefinition {
   dieSize?: number;
 }
 
-export interface ResourceMaximumDefinition {
+export interface AbilityModifierResourceMaximumDefinition {
   type: 'ability-modifier';
 
   ability: AbilityKey;
 
   minimum?: number;
+}
+
+export interface ProficiencyBonusResourceMaximumDefinition {
+  type: 'proficiency-bonus';
+
+  multiplier: number;
+
+  minimum?: number;
+}
+
+export type ResourceMaximumDefinition =
+  | AbilityModifierResourceMaximumDefinition
+  | ProficiencyBonusResourceMaximumDefinition;
+
+export interface ResourceRecoveryDefinition {
+  amount: number | 'all';
+
+  action?: ActionType;
+
+  limitedUses?: {
+    maximum: number;
+
+    recovery: ResourceRecovery;
+  };
 }
 
 export interface ResourceDefinition {
@@ -257,6 +474,8 @@ export interface ResourceDefinition {
   names: LocalizedName;
 
   recovery: ResourceRecovery;
+
+  additionalRecoveries?: ResourceRecoveryDefinition[];
 
   progression: ResourceLevelDefinition[];
 }
