@@ -277,6 +277,10 @@ export interface MechanicalEffectChoiceDefinition {
 export interface RuleMechanicDefinition {
   activation?: ActionType;
 
+  requirements?: string[];
+
+  actionOptions?: string[];
+
   trigger?: TriggerDefinition;
 
   range?: DistanceDefinition;
@@ -311,6 +315,12 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
   savingThrowAbility?: AbilityKey;
 
   value?: number | string | boolean;
+
+  damageMultiplier?: number;
+
+  naturalRollMinimum?: number;
+
+  naturalRollSubstitution?: number;
 
   progression?: MechanicalEffectLevelDefinition[];
 
