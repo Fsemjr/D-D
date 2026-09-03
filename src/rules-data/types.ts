@@ -137,6 +137,18 @@ export interface UsageLimitDefinition {
   period: 'turn' | 'round';
 }
 
+export interface PreparationDefinition {
+  value: number;
+
+  unit: 'hour' | 'day';
+}
+
+export interface MonetaryCostDefinition {
+  amount: number;
+
+  currency: 'gp';
+}
+
 export interface AbilityFormulaDefinition {
   base?: number;
 
@@ -299,6 +311,10 @@ export interface RuleMechanicDefinition {
 
   choices?: MechanicalEffectChoiceDefinition[];
 
+  preparation?: PreparationDefinition;
+
+  cost?: MonetaryCostDefinition;
+
 }
 
 export interface MechanicalEffect extends RuleMechanicDefinition {
@@ -331,6 +347,8 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
   damageType?: string;
 
   rollTypes?: RollType[];
+
+  automaticCriticalHit?: boolean;
 
   usesSameRoll?: boolean;
 

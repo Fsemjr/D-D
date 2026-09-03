@@ -423,23 +423,23 @@ describe('Rogue core feature mechanics', () => {
   });
 });
 
-describe('Rogue subclass placeholder policy', () => {
-  it('keeps subclass IDs empty while preserving the level 3 subclass choice', () => {
-    expect(rogueClass.subclassIds).toEqual([]);
+describe('Rogue subclass registration', () => {
+  it('registers Assassin while preserving the level 3 subclass choice', () => {
+    expect(rogueClass.subclassIds).toEqual(['rogue-assassin']);
     expect(rogueSubclassChoice).toEqual({
       id: 'rogue-subclass-choice',
       type: 'subclass',
       minimumLevel: 3,
       count: 1,
-      optionIds: [],
+      optionIds: ['rogue-assassin'],
     });
     expect(rogueClass.progression[3]?.choices).toContain(rogueSubclassChoice);
   });
 
-  it('does not accidentally register a Rogue subclass feature definition', () => {
+  it('keeps base features owned by the Rogue class', () => {
     expect(rogueFeatures.every(({ origin }) => origin === 'class')).toBe(true);
     expect(rogueFeatures.every(({ sourceId }) => sourceId === 'rogue')).toBe(true);
-    expect(rogueClass.subclassIds).toHaveLength(0);
+    expect(rogueClass.subclassIds).toEqual(['rogue-assassin']);
   });
 });
 
