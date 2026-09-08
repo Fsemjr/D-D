@@ -52,7 +52,7 @@ export const rogueSubclassChoice: DirectChoiceDefinition = {
   type: 'subclass',
   minimumLevel: 3,
   count: 1,
-  optionIds: [],
+  optionIds: ['rogue-assassin'],
 };
 
 export const rogueClass: ClassDefinition = {
@@ -100,7 +100,7 @@ export const rogueClass: ClassDefinition = {
     ],
   },
   subclassLevel: 3,
-  subclassIds: [],
+  subclassIds: ['rogue-assassin'],
   progression: {
     1: {
       level: 1,

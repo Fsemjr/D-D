@@ -10,3 +10,4 @@ export * from './fighter-echo-knight';
 export * from './fighter-psi-warrior';
 export * from './fighter-rune-knight';
 export * from './rogue';
+export * from './rogue-assassin';
