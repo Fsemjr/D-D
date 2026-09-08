@@ -87,6 +87,8 @@ export type MechanicalEffectType =
   | 'reroll'
   | 'redirection'
   | 'inscription'
+  | 'requirement-override'
+  | 'extra-turn'
   | 'informational';
 
 export type RollType = 'attack-roll' | 'saving-throw' | 'ability-check';
@@ -159,6 +161,8 @@ export interface AbilityFormulaDefinition {
   multiplier?: number;
 
   minimum?: number;
+
+  unit?: 'meter';
 }
 
 export interface ResourceDieFormulaDefinition {
@@ -176,7 +180,7 @@ export interface ResourceDieFormulaDefinition {
 export interface SpeedMultiplierFormulaDefinition {
   type: 'speed-multiplier';
 
-  speed: 'walking' | 'flying' | 'swimming' | 'climbing';
+  speed: 'movement' | 'walking' | 'flying' | 'swimming' | 'climbing';
 
   multiplier: number;
 }
@@ -261,6 +265,34 @@ export interface MovementDefinition {
 
   destination?: 'visible-unoccupied-space';
 }
+
+export interface MovementThresholdDefinition {
+  comparison: 'at-most';
+
+  period: 'current-turn';
+
+  formula: SpeedMultiplierFormulaDefinition;
+}
+
+export interface CombatTurnTimingDefinition {
+  initiative?: 'normal';
+
+  initiativeOffset?: number;
+}
+
+export interface ExtraTurnDefinition {
+  combatRound: 'first';
+
+  turns: [
+    CombatTurnTimingDefinition,
+    CombatTurnTimingDefinition,
+    ...CombatTurnTimingDefinition[],
+  ];
+
+  disabledWhen?: string[];
+}
+
+export type UsageRequirementType = 'class' | 'race' | 'level';
 
 export interface SavingThrowDefinition {
   ability: AbilityKey;
@@ -357,6 +389,16 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
   ignoresOriginalRange?: boolean;
 
   movement?: MovementDefinition;
+
+  movementMode?: 'climbing' | 'running-jump';
+
+  extraMovementCostMultiplier?: number;
+
+  movementThreshold?: MovementThresholdDefinition;
+
+  ignoredRequirementTypes?: UsageRequirementType[];
+
+  extraTurn?: ExtraTurnDefinition;
 
   distance?: DistanceDefinition;
 
