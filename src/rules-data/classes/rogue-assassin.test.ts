@@ -182,9 +182,15 @@ describe('Assassin mechanics', () => {
 });
 
 describe('Rogue and Fighter regressions', () => {
-  it('keeps Assassin registered alongside Thief', () => {
-    expect(rogueClass.subclassIds).toEqual(['rogue-assassin', 'rogue-thief']);
-    expect(rogueSubclassChoice.optionIds).toEqual(['rogue-assassin', 'rogue-thief']);
+  it('keeps Assassin registered alongside Thief and Arcane Trickster', () => {
+    const expectedSubclassIds = [
+      'rogue-assassin',
+      'rogue-thief',
+      'rogue-arcane-trickster',
+    ];
+
+    expect(rogueClass.subclassIds).toEqual(expectedSubclassIds);
+    expect(rogueSubclassChoice.optionIds).toEqual(expectedSubclassIds);
     expect(rogueClass.progression[3]?.choices).toContainEqual(rogueSubclassChoice);
   });
 

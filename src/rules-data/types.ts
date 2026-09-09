@@ -89,6 +89,8 @@ export type MechanicalEffectType =
   | 'inscription'
   | 'requirement-override'
   | 'extra-turn'
+  | 'spell-effect-negation'
+  | 'temporary-spell-knowledge'
   | 'informational';
 
 export type RollType = 'attack-roll' | 'saving-throw' | 'ability-check';
@@ -202,7 +204,7 @@ export interface ReferenceFormulaDefinition {
 
   referenceId: string;
 
-  property: 'count';
+  property: 'count' | 'spell-save-dc';
 }
 
 export type MechanicalFormulaDefinition =
@@ -216,6 +218,7 @@ export interface DurationDefinition {
   type:
     | 'until-end-of-current-turn'
     | 'until-next-long-rest'
+    | 'hours'
     | 'minutes'
     | 'while-concentrating';
 
@@ -294,13 +297,41 @@ export interface ExtraTurnDefinition {
 
 export type UsageRequirementType = 'class' | 'race' | 'level';
 
-export interface SavingThrowDefinition {
+export interface CheckDefinition {
   ability: AbilityKey;
 
-  dc: AbilityFormulaDefinition;
+  proficiencyId?: string;
+}
+
+export interface ContestedCheckDefinition {
+  actor: CheckDefinition;
+
+  opponent: CheckDefinition;
+}
+
+interface SavingThrowBaseDefinition {
+  roller?: 'target' | 'triggering-creature';
+
+  dc: AbilityFormulaDefinition | ReferenceFormulaDefinition;
 
   onFailure?: MechanicalEffectChoiceDefinition | MechanicalEffect[];
 }
+
+export interface AbilitySavingThrowDefinition extends SavingThrowBaseDefinition {
+  ability: AbilityKey;
+
+  abilitySource?: never;
+}
+
+export interface SourcedAbilitySavingThrowDefinition extends SavingThrowBaseDefinition {
+  ability?: never;
+
+  abilitySource: 'caster-spellcasting-ability';
+}
+
+export type SavingThrowDefinition =
+  | AbilitySavingThrowDefinition
+  | SourcedAbilitySavingThrowDefinition;
 
 export interface MechanicalEffectChoiceOption {
   id: string;
@@ -328,6 +359,8 @@ export interface RuleMechanicDefinition {
   trigger?: TriggerDefinition;
 
   range?: DistanceDefinition;
+
+  rangeOriginId?: string;
 
   target?: TargetDefinition;
 
@@ -399,6 +432,18 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
   ignoredRequirementTypes?: UsageRequirementType[];
 
   extraTurn?: ExtraTurnDefinition;
+
+  contestedCheck?: ContestedCheckDefinition;
+
+  spellLevelMinimum?: number;
+
+  spellLevelMaximum?: KnownSpellLevelLimit;
+
+  spellListRestriction?: 'none';
+
+  usesOwnSpellSlots?: boolean;
+
+  originalCasterLockout?: boolean;
 
   distance?: DistanceDefinition;
 
@@ -649,6 +694,8 @@ export interface SpellcastingDefinition {
   startsAtLevel: number;
 
   spellListId?: string;
+
+  mandatoryCantripIds?: string[];
 
   progression?: Partial<Record<number, SpellcastingLevelDefinition>>;
 
