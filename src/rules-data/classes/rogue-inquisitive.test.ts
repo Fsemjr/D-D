@@ -36,6 +36,7 @@ const expectedSubclassIds = [
   'rogue-thief',
   'rogue-arcane-trickster',
   'rogue-inquisitive',
+  'rogue-mastermind',
 ];
 
 function featureById(id: string) {
@@ -326,7 +327,7 @@ describe('Eye for Weakness', () => {
 });
 
 describe('Inquisitive registration and regressions', () => {
-  it('registers exactly four Rogue subclasses and level 3 options', () => {
+  it('keeps Inquisitive registered with all five Rogue subclasses', () => {
     expect(rogueClass.subclassIds).toEqual(expectedSubclassIds);
     expect(rogueSubclassChoice.optionIds).toEqual(expectedSubclassIds);
     expect(rogueClass.progression[3]?.choices).toContainEqual(rogueSubclassChoice);

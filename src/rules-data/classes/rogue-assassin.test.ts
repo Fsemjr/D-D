@@ -188,6 +188,7 @@ describe('Rogue and Fighter regressions', () => {
       'rogue-thief',
       'rogue-arcane-trickster',
       'rogue-inquisitive',
+      'rogue-mastermind',
     ];
 
     expect(rogueClass.subclassIds).toEqual(expectedSubclassIds);

@@ -219,12 +219,14 @@ describe('Thief registration and regressions', () => {
       'rogue-thief',
       'rogue-arcane-trickster',
       'rogue-inquisitive',
+      'rogue-mastermind',
     ]);
     expect(rogueSubclassChoice.optionIds).toEqual([
       'rogue-assassin',
       'rogue-thief',
       'rogue-arcane-trickster',
       'rogue-inquisitive',
+      'rogue-mastermind',
     ]);
     expect(rogueClass.progression[3]?.choices).toContainEqual(rogueSubclassChoice);
   });
