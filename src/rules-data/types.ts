@@ -145,7 +145,7 @@ export interface UsageLimitDefinition {
 export interface PreparationDefinition {
   value: number;
 
-  unit: 'hour' | 'day';
+  unit: 'minute' | 'hour' | 'day';
 }
 
 export interface MonetaryCostDefinition {
@@ -445,6 +445,10 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
   revealsDetails?: boolean;
 
   modifiesFeatureId?: string;
+
+  comparisonCategories?: string[];
+
+  comparisonResults?: string[];
 
   spellLevelMinimum?: number;
 
