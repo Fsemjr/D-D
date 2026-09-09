@@ -12,3 +12,4 @@ export * from './fighter-rune-knight';
 export * from './rogue';
 export * from './rogue-assassin';
 export * from './rogue-thief';
+export * from './rogue-arcane-trickster';

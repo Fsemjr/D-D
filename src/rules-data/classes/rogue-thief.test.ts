@@ -213,11 +213,16 @@ describe("Thief's Reflexes", () => {
 });
 
 describe('Thief registration and regressions', () => {
-  it('registers exactly Assassin and Thief in the Rogue class and level 3 choice', () => {
-    expect(rogueClass.subclassIds).toEqual(['rogue-assassin', 'rogue-thief']);
+  it('keeps Thief registered with Assassin and Arcane Trickster', () => {
+    expect(rogueClass.subclassIds).toEqual([
+      'rogue-assassin',
+      'rogue-thief',
+      'rogue-arcane-trickster',
+    ]);
     expect(rogueSubclassChoice.optionIds).toEqual([
       'rogue-assassin',
       'rogue-thief',
+      'rogue-arcane-trickster',
     ]);
     expect(rogueClass.progression[3]?.choices).toContainEqual(rogueSubclassChoice);
   });

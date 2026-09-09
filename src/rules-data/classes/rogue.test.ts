@@ -424,14 +424,22 @@ describe('Rogue core feature mechanics', () => {
 });
 
 describe('Rogue subclass registration', () => {
-  it('registers Assassin and Thief while preserving the level 3 subclass choice', () => {
-    expect(rogueClass.subclassIds).toEqual(['rogue-assassin', 'rogue-thief']);
+  it('registers all three subclasses while preserving the level 3 choice', () => {
+    expect(rogueClass.subclassIds).toEqual([
+      'rogue-assassin',
+      'rogue-thief',
+      'rogue-arcane-trickster',
+    ]);
     expect(rogueSubclassChoice).toEqual({
       id: 'rogue-subclass-choice',
       type: 'subclass',
       minimumLevel: 3,
       count: 1,
-      optionIds: ['rogue-assassin', 'rogue-thief'],
+      optionIds: [
+        'rogue-assassin',
+        'rogue-thief',
+        'rogue-arcane-trickster',
+      ],
     });
     expect(rogueClass.progression[3]?.choices).toContain(rogueSubclassChoice);
   });
@@ -439,7 +447,11 @@ describe('Rogue subclass registration', () => {
   it('keeps base features owned by the Rogue class', () => {
     expect(rogueFeatures.every(({ origin }) => origin === 'class')).toBe(true);
     expect(rogueFeatures.every(({ sourceId }) => sourceId === 'rogue')).toBe(true);
-    expect(rogueClass.subclassIds).toEqual(['rogue-assassin', 'rogue-thief']);
+    expect(rogueClass.subclassIds).toEqual([
+      'rogue-assassin',
+      'rogue-thief',
+      'rogue-arcane-trickster',
+    ]);
   });
 });
 
