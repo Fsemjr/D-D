@@ -370,11 +370,12 @@ describe('Arcane Trickster higher-level features', () => {
 });
 
 describe('Arcane Trickster registration and regressions', () => {
-  it('registers exactly the three Rogue subclasses and level 3 options', () => {
+  it('keeps Arcane Trickster registered with all four Rogue subclasses', () => {
     const expectedSubclassIds = [
       'rogue-assassin',
       'rogue-thief',
       'rogue-arcane-trickster',
+      'rogue-inquisitive',
     ];
 
     expect(rogueClass.subclassIds).toEqual(expectedSubclassIds);

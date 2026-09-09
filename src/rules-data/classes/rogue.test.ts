@@ -424,11 +424,12 @@ describe('Rogue core feature mechanics', () => {
 });
 
 describe('Rogue subclass registration', () => {
-  it('registers all three subclasses while preserving the level 3 choice', () => {
+  it('registers all four subclasses while preserving the level 3 choice', () => {
     expect(rogueClass.subclassIds).toEqual([
       'rogue-assassin',
       'rogue-thief',
       'rogue-arcane-trickster',
+      'rogue-inquisitive',
     ]);
     expect(rogueSubclassChoice).toEqual({
       id: 'rogue-subclass-choice',
@@ -439,6 +440,7 @@ describe('Rogue subclass registration', () => {
         'rogue-assassin',
         'rogue-thief',
         'rogue-arcane-trickster',
+        'rogue-inquisitive',
       ],
     });
     expect(rogueClass.progression[3]?.choices).toContain(rogueSubclassChoice);
@@ -451,6 +453,7 @@ describe('Rogue subclass registration', () => {
       'rogue-assassin',
       'rogue-thief',
       'rogue-arcane-trickster',
+      'rogue-inquisitive',
     ]);
   });
 });
