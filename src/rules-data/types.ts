@@ -91,6 +91,7 @@ export type MechanicalEffectType =
   | 'extra-turn'
   | 'spell-effect-negation'
   | 'temporary-spell-knowledge'
+  | 'detection'
   | 'informational';
 
 export type RollType = 'attack-roll' | 'saving-throw' | 'ability-check';
@@ -389,6 +390,8 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
 
   condition?: string;
 
+  checkPurpose?: string;
+
   ability?: AbilityKey;
 
   abilityOptions?: AbilityKey[];
@@ -398,6 +401,8 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
   value?: number | string | boolean;
 
   damageMultiplier?: number;
+
+  damageMode?: 'additional';
 
   naturalRollMinimum?: number;
 
@@ -434,6 +439,12 @@ export interface MechanicalEffect extends RuleMechanicDefinition {
   extraTurn?: ExtraTurnDefinition;
 
   contestedCheck?: ContestedCheckDefinition;
+
+  detectionCategories?: string[];
+
+  revealsDetails?: boolean;
+
+  modifiesFeatureId?: string;
 
   spellLevelMinimum?: number;
 

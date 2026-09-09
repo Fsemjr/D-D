@@ -56,6 +56,7 @@ export const rogueSubclassChoice: DirectChoiceDefinition = {
     'rogue-assassin',
     'rogue-thief',
     'rogue-arcane-trickster',
+    'rogue-inquisitive',
   ],
 };
 
@@ -108,6 +109,7 @@ export const rogueClass: ClassDefinition = {
     'rogue-assassin',
     'rogue-thief',
     'rogue-arcane-trickster',
+    'rogue-inquisitive',
   ],
   progression: {
     1: {

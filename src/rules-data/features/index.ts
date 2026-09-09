@@ -13,3 +13,4 @@ export * from './rogue';
 export * from './rogue-assassin';
 export * from './rogue-thief';
 export * from './rogue-arcane-trickster';
+export * from './rogue-inquisitive';
